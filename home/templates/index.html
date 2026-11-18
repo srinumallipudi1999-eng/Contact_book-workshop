@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: beige;
+        }
+        section{
+            position: relative;
+            
+        }
+        #h1{
+            /* border: 2px solid red; */
+            width: 20%;
+            text-align: end;
+            padding: 2% 0%;
+        }
+               
+        aside{
+        /* border: 2px solid hotpink; */
+         width: 90%;
+        height: auto;
+        padding: 2% 0% 2% 0%;
+        margin: auto;
+        color: white;
+        display: flex; 
+        justify-content: space-around;
+        flex-direction: column;
+        gap: 10px;
+    
+        }
+
+        aside div{
+            /* border: 2px solid brown; */
+            width: 30%;    
+            cursor: pointer;
+            height: 70px;
+            color: black;
+            align-content: center;
+            padding: 0% 0% 0% 2%;
+            /* background-color: #443189c6; */
+            position: relative;
+
+        }
+        article{
+            /* border: 2px solid pink; */
+            height: 650px;
+            width: 400px;
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            background: #202127;
+            color: white;
+            overflow: hidden;
+            overflow: scroll;
+            scrollbar-width: none;
+            display: none;
+            border-radius: 15px;
+        }
+        article h2{
+            padding: 5%;
+        }
+        article main{
+            /* border: 2px solid violet; */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 5% 0% 5% 0%;
+        }
+        article main div{
+            /* border: 2px solid burlywood; */
+            height: 70px;
+            width: 90%;
+            margin: auto;
+            border: 1px solid #85868e;
+            border-radius: 5px;
+            position: relative;
+            align-content: center;
+            padding: 0% 0% 0% 2%;
+        }
+        article main div h4{
+            background-color: #202127;
+            position: absolute;
+            top: -13%;
+            left: 5%;
+            padding: 0% 2%;
+        }
+        article main p{
+            text-align: center;
+        }
+        .cont {
+            display: flex;
+            gap: 10px;
+            border: 0px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cont button {
+           
+            padding: 20px 50px;
+            border: none;
+            border-radius: 30px;
+            background: #304f8c;
+            color: white;
+            cursor: pointer;
+        }
+        .img {
+            width: 150px;
+            height: 150px;
+            display: block;
+            margin: 20px auto;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 40px;
+            cursor: pointer;
+            color: white;
+            z-index: 1;
+        }
+        
+
+        .container{
+            /* border: 2px solid green; */
+            height: 100px;
+            width: 300px;
+            position: absolute; 
+            left: 70%;
+            top: 30%;
+            z-index: 100;
+            display: none;
+            
+        }
+        aside div:hover .container {
+            display: block;
+        }
+        .inbox{
+            /* border: 2px solid green; */
+            width: 200px;
+            height: 80px;
+            position: absolute;
+            right: 1%;
+            top: 30%;
+            background-color: #0b0b0b;
+            color: white;
+            clip-path: polygon(
+                28% 0,
+                100% 0,
+                100% 1000%,
+                28% 100%,
+                0 50%
+            );
+            border-radius: 10px;
+            
+        }
+        .inbox p{
+            padding: 0% 0% 0% 20%;
+            /* text-decoration: underline; */
+            
+           
+        }
+        .line{
+            position: absolute;
+            height: 40px;
+            width: 400PX;
+            left: -70%;
+            top: 30%;
+
+            background-color: transparent;
+            border-top: 0;
+            border-right: 0;
+            border-bottom-left-radius: 80%;
+            border-top-left-radius: 0%;
+            border-left: 2px solid red;
+            border-bottom: 2px solid red;
+            
+           
+        }
+        .circle{
+            position: absolute;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            top: 42%;
+            left: 8%;
+        }
+    </style>
+</head>
+<body>
+    <section>
+
+        <h1 id="h1">
+            MY CONTACTS
+        </h1>
+
+        <aside>
+            {% for i in data %}
+            <div onclick="showContact('{{ i.id }}')">
+                <h1>{{i.name}}</h1>
+                <main class="container">
+                    <div class="line">
+
+                    </div>
+                    <div class="inbox">
+                        <div class="circle"></div>
+                        <p>Name: {{i.name}}</p>
+                        <p>Phone: {{i.phone}}</p>
+                    </div>
+                </main>
+            </div>
+            {% endfor %}
+        </aside>
+
+        {% for i in data %}
+        <article id="contact-{{ i.id }}" >
+            <h2>Contact details</h2>
+            <span onclick="closeContact('{{ i.id }}')" class="close">&times;</span>
+            <img src="https://i.pinimg.com/564x/bf/b6/d2/bfb6d21bf95188cdc380d0261876dede.jpg" alt="" class="img">
+
+            <main>
+
+                <div>
+                    <h4>Name</h4>
+                    {{i.name}}
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    {{i.company|default:" "}}
+                </div>
+                <div>
+                    <h4>Phone</h4>
+                    {{i.phone|default:" "}}
+                </div>
+                <div>
+                    <h4>Email</h4>
+                    {{i.email|default:" "}}
+                </div>
+                <div>
+                    <h4>Significant date (Birthday)</h4>
+                    {{i.dob|date:"d M Y"|default:" "}}
+                </div>
+                
+                <div>
+                    <h4>Address (Home)</h4>
+                    {{i.address|default:" "}}
+                </div>
+                <div>
+                    <h4>Note</h4>
+                    {{i.note|default:" "}}
+                </div>
+                <p>Add more info</p>
+                <div class="cont">
+                    <button type="button">Labels</button>
+                    <button type="button">Other</button>
+                </div>
+                
+            </main>
+        </article>
+        {% endfor %}
+
+    </section>
+
+    <script>
+        function showContact(id) {
+            let articles = document.querySelectorAll("article");
+
+            articles.forEach(function(article) {
+                article.style.display = "none";
+            });
+
+            document.getElementById("contact-" + id).style.display = "block";
+        }
+        function closeContact(id) {
+            document.getElementById("contact-" + id).style.display = "none";
+        }
+    </script>
+</body>
+</html>
